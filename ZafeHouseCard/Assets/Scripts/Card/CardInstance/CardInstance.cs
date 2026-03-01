@@ -29,10 +29,16 @@ public class CardInstance : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // Let CardPlayManager handle auto-selection and observers
         if (BattleManager.Instance == null) return;
 
-        CardPlayManager.Instance.PlayCard(this,BattleManager.Instance._currentPlayerInstance, BattleManager.Instance._currentZombieInstance, BattleManager.Instance);
+        if (!BattleManager.Instance.IsPlayerTurn)
+        {
+            Debug.Log("Not your turn!");
+            return;
+        }
+
+        // Play card via BattleManager
+        BattleManager.Instance.PlayerPlaysCard(this);
     }
 
 }
